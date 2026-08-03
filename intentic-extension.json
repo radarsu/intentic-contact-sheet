@@ -1,0 +1,30 @@
+{
+    "publisher": "intentic",
+    "name": "contact-sheet",
+    "version": "1.0.0",
+    "category": "workspace",
+    "icon": "th-large",
+    "engines": { "intentic": "^0.4.0" },
+    "entry": "dist/extension.js",
+    "permissions": { "sandbox": ["GET /workspace/tree", "GET /workspace/children", "GET /workspace/raw"] },
+    "contributes": {
+        "documents": [{ "id": "photos", "label": "Contact sheet" }],
+        "commands": [{ "command": "contact-sheet.root", "title": "Contact sheet: pictures in the workspace root" }],
+        "settings": [
+            {
+                "key": "thumbnail",
+                "type": "enum",
+                "enum": ["small", "medium", "large"],
+                "default": "medium",
+                "title": "Thumbnail size"
+            },
+            {
+                "key": "limit",
+                "type": "number",
+                "default": 120,
+                "title": "Pictures per folder",
+                "description": "How many a sheet loads before it stops. Each one is a separate read from the daemon, so a folder of thousands is deliberately not loaded whole."
+            }
+        ]
+    }
+}
