@@ -43,7 +43,7 @@ const treeFixture = {
 const hostStub = () => {
     const state = { documents: [], commands: [], handlers: new Map(), requested: [], opened: [], changeListeners: [] };
     const api = {
-        apiVersion: `1.0.0`,
+        apiVersion: `2.0.0`,
         documents: {
             register: (provider) => {
                 assert.ok(declaredDocuments.has(provider.id), `document provider "${provider.id}" is not declared`);
