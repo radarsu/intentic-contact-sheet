@@ -43,10 +43,10 @@ to add one. So a sheet loads a bounded number of pictures (**Settings → Extens
 ## Build it yourself
 
 ```sh
-npm install
-npm run typecheck
-npm test              # the folder index and the EXIF reader, then the built bundle against a host stub
-npm run build         # dist/extension.js — one file, vue as the only import
+pnpm install
+pnpm typecheck
+pnpm test              # the folder index and the EXIF reader, then the built bundle against a host stub
+pnpm build         # dist/extension.js — one file, vue as the only import
 ```
 
 `dist/extension.js` is committed: it is what `entry` points at and what the owner's sandbox clones, and there
