@@ -3,6 +3,7 @@
     "name": "contact-sheet",
     "version": "1.0.0",
     "category": "workspace",
+    "art": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" fill=\"#2E6FE0\"/><rect x=\"4.5\" y=\"4.5\" width=\"11\" height=\"10\" rx=\"1.8\" fill=\"#fff\"/><rect x=\"16.5\" y=\"4.5\" width=\"11\" height=\"10\" rx=\"1.8\" fill=\"#AFCCF8\"/><rect x=\"4.5\" y=\"17.5\" width=\"11\" height=\"10\" rx=\"1.8\" fill=\"#AFCCF8\"/><rect x=\"16.5\" y=\"17.5\" width=\"11\" height=\"10\" rx=\"1.8\" fill=\"#fff\"/><path d=\"M6.4 14.5h7.2L10 9.4z\" fill=\"#2E6FE0\"/><circle cx=\"12.6\" cy=\"7.9\" r=\"1.5\" fill=\"#FFC24D\"/></svg>",
     "icon": "th-large",
     "engines": { "intentic": "^2.0.0" },
     "entry": "dist/extension.js",
