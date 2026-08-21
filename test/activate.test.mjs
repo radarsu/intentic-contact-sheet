@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
-/* The built bundle against a host stub that enforces the manifest — the document provider's id, the command's
+/* The built bundle against a host stub that enforces the manifest: the document provider's id, the command's
  * name, and (the one that matters most here) every daemon route the extension reaches. This extension DOES
  * call the daemon, so the route check is not ceremony: the manifest's `permissions.sandbox` list is what the
  * owner approved at install, and the real host throws on anything outside it. */
@@ -93,7 +93,7 @@ test(`activate registers what the manifest declares, and indexes the tree once`,
     const context = { extensionId: `intentic.contact-sheet`, subscriptions: [] };
 
     await activate(api, context);
-    // The index read is fired from activate, not awaited by it — let the microtask land.
+    // The index read is fired from activate, not awaited by it: let the microtask land.
     await new Promise((resolve) => setImmediate(resolve));
 
     assert.deepEqual(state.documents.map((provider) => provider.id), [`photos`]);
@@ -101,7 +101,7 @@ test(`activate registers what the manifest declares, and indexes the tree once`,
     assert.deepEqual(state.requested, [`/workspace/tree`]);
 
     const provider = state.documents[0];
-    // detect() is a lookup into the index the read filled — a folder with pictures offers, one without doesn't.
+    // detect() is a lookup into the index the read filled: a folder with pictures offers, one without doesn't.
     assert.equal(provider.detect(`trip`)?.title, `Photos`);
     assert.match(provider.detect(`trip`).tooltip, /1 picture$/);
     assert.equal(provider.detect(`notes.md`), undefined);
@@ -142,7 +142,7 @@ test(`the command opens this extension's own document for the root`, async () =>
     state.handlers.get(`contact-sheet.root`)();
     assert.deepEqual(state.opened, [[`photos`, ``]]);
 
-    // Not a runtime assertion — a reminder that this list IS the approval surface shown at install.
+    // Not a runtime assertion: a reminder that this list IS the approval surface shown at install.
     assert.deepEqual(declaredRoutes, [`GET /workspace/tree`, `GET /workspace/children`, `GET /workspace/raw`]);
 
     for (const subscription of context.subscriptions) {

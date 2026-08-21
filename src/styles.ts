@@ -2,7 +2,7 @@ import type { Disposable } from "@intentic/extension-api";
 
 /* One stylesheet, added by activate() and removed when the extension is switched off. An SFC <style> block
  * would be emitted by vite's library build as a separate CSS asset, and the host imports a single JS file from
- * a blob URL — nothing would ever fetch it. Built on the design system's role tokens, so the sheet follows the
+ * a blob URL: nothing would ever fetch it. Built on the design system's role tokens, so the sheet follows the
  * light/dark theme without knowing which is on. */
 
 const SHEET = `

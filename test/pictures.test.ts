@@ -4,7 +4,7 @@ import { orientationTransform, readJpegMeta } from "../src/exif.ts";
 import { entriesAt, indexPictureFolders, isPicture, picturesIn, ROOT, type TreeEntry } from "../src/pictures.ts";
 
 /* The two pure halves: which folders earn an icon, and what a JPEG says about itself. Node's own runner, no
- * test dependency — node 24 strips the types, so these run straight off src/ with nothing built. */
+ * test dependency: node 24 strips the types, so these run straight off src/ with nothing built. */
 
 const file = (path: string, size?: number): TreeEntry => ({ name: path.slice(path.lastIndexOf(`/`) + 1), path, type: `file`, size });
 const dir = (path: string, children: TreeEntry[], ignored?: boolean): TreeEntry => ({
@@ -86,7 +86,7 @@ test(`exif: every rotation and mirror maps to a transform, and 1 to none`, () =>
 
 /* A structurally real JPEG head: SOI, then an APP1 holding "Exif\0\0", a little-endian TIFF header, an IFD0
  * with an orientation and a pointer to an Exif IFD, and DateTimeOriginal in that sub-IFD. Hand-built rather
- * than a checked-in binary — the offsets ARE what is being tested, and a blob nobody can read in a diff would
+ * than a checked-in binary: the offsets ARE what is being tested, and a blob nobody can read in a diff would
  * make this test unmaintainable. */
 const buildJpeg = ({ orientation, taken }: { orientation?: number; taken?: string }): Uint8Array => {
     const ifd0Entries = [orientation === undefined ? undefined : `orientation`, taken === undefined ? undefined : `exifPointer`].filter(

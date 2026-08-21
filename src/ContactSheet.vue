@@ -7,7 +7,7 @@ import { entriesAt, picturesIn, ROOT, type Picture, type TreeEntry } from "./pic
 
 /* One folder's pictures, in the editor area beside the files. The host owns the tab; this owns what is in it.
  *
- * Every thumbnail is a separate authenticated read of the file's bytes — there is no thumbnail service in the
+ * Every thumbnail is a separate authenticated read of the file's bytes: there is no thumbnail service in the
  * daemon and this extension is not allowed to write one, so the honest design is: fetch a bounded number,
  * concurrently but not all at once, and say plainly when there are more. */
 
@@ -112,7 +112,7 @@ const kilobytes = (bytes: number | undefined): string | undefined =>
             <span class="cs-title">{{ folderName }}</span>
             <span class="cs-muted">
                 <template v-if="loading">Loading…</template>
-                <template v-else-if="total > tiles.length">{{ tiles.length }} of {{ total }} pictures — raise "Pictures per folder" in Settings → Extensions</template>
+                <template v-else-if="total > tiles.length">{{ tiles.length }} of {{ total }} pictures: raise "Pictures per folder" in Settings → Extensions</template>
                 <template v-else>{{ total }} picture{{ total === 1 ? `` : `s` }}</template>
             </span>
         </div>
@@ -141,7 +141,7 @@ const kilobytes = (bytes: number | undefined): string | undefined =>
         </div>
 
         <p v-if="!loading && total === 0 && !failure" class="cs-note">
-            No pictures directly in this folder. HEIC files aren't shown — no browser decodes them; convert them first.
+            No pictures directly in this folder. HEIC files aren't shown: no browser decodes them; convert them first.
         </p>
     </div>
 </template>

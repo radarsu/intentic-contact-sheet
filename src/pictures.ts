@@ -20,7 +20,7 @@ export const isPicture = (name: string): boolean => {
     return dot > 0 && PICTURE_EXTENSIONS.has(name.slice(dot + 1).toLowerCase());
 };
 
-// The workspace root is the empty path — the tree renders its contents rather than a row for it, which is why
+// The workspace root is the empty path: the tree renders its contents rather than a row for it, which is why
 // the root needs a command to reach its sheet at all (see contributes.commands).
 export const ROOT = ``;
 
@@ -30,7 +30,7 @@ const parentOf = (path: string): string => {
 };
 
 /* Directory path → how many pictures sit DIRECTLY in it. Not recursive on purpose: a contact sheet is of one
- * folder, so a parent that merely contains a photo folder should not offer one — otherwise every repository
+ * folder, so a parent that merely contains a photo folder should not offer one: otherwise every repository
  * root, and the workspace root above them, would claim to be a photo folder because something deep inside is.
  *
  * Ignored subtrees (node_modules, .git, browser profiles) are skipped whole: the icons they would add are
@@ -71,7 +71,7 @@ export const picturesIn = (entries: readonly TreeEntry[]): Picture[] =>
         .map((entry) => ({ name: entry.name, path: entry.path, size: entry.size }))
         .sort((left, right) => left.name.localeCompare(right.name, undefined, { numeric: true, sensitivity: `base` }));
 
-// The top-level entries of a directory, read out of a whole-workspace tree — how the ROOT's sheet is filled,
+// The top-level entries of a directory, read out of a whole-workspace tree: how the ROOT's sheet is filled,
 // since /workspace/children requires a non-empty path and the root has none.
 export const entriesAt = (tree: readonly TreeEntry[], path: string): readonly TreeEntry[] => {
     if (path === ROOT) {

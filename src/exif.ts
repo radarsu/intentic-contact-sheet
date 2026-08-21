@@ -10,7 +10,7 @@
 export interface JpegMeta {
     // EXIF orientation 1–8; absent when the file doesn't say.
     readonly orientation?: number;
-    // "YYYY-MM-DD HH:MM", from DateTimeOriginal — the moment the shutter fired, not the file's mtime.
+    // "YYYY-MM-DD HH:MM", from DateTimeOriginal: the moment the shutter fired, not the file's mtime.
     readonly takenAt?: string;
 }
 
@@ -52,7 +52,7 @@ export const readJpegMeta = (bytes: Uint8Array): JpegMeta => {
 const readAscii = (bytes: Uint8Array, at: number, length: number): string =>
     String.fromCharCode(...bytes.subarray(at, at + length));
 
-// The TIFF header EXIF embeds: byte order, magic 42, then the offset of IFD0 — every offset inside is relative
+// The TIFF header EXIF embeds: byte order, magic 42, then the offset of IFD0, every offset inside is relative
 // to `start`, which is why it is threaded through rather than folded into the DataView.
 const readTiff = (view: DataView, start: number, bytes: Uint8Array): JpegMeta => {
     if (start + 8 > view.byteLength) {
