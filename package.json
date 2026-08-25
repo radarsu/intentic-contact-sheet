@@ -12,7 +12,7 @@
         "test": "node --test test/pictures.test.ts test/activate.test.mjs"
     },
     "dependencies": {
-        "@intentic/extension-api": "^1.176.3"
+        "@intentic/extension-api": "^1.228.3"
     },
     "devDependencies": {
         "@types/node": "^24.0.0",

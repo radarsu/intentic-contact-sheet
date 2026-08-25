@@ -1,12 +1,6 @@
-import { shallowRef as R, defineComponent as P, ref as E, computed as O, watch as F, onBeforeUnmount as V, openBlock as l, createElementBlock as d, createElementVNode as g, toDisplayString as f, Fragment as I, createTextVNode as A, normalizeClass as X, renderList as G, normalizeStyle as H, unref as Y, createCommentVNode as q } from "vue";
-let S;
-const J = (e) => {
-  S = e;
-}, x = () => {
-  if (S === void 0)
-    throw new Error("intentic.contact-sheet: host() called before activate()");
-  return S;
-}, W = /* @__PURE__ */ new Set(["png", "jpg", "jpeg", "gif", "webp", "avif", "bmp"]), z = (e) => {
+import { shallowRef as N, defineComponent as D, ref as I, computed as O, watch as P, onBeforeUnmount as F, openBlock as l, createElementBlock as d, createElementVNode as g, toDisplayString as f, Fragment as T, createTextVNode as S, normalizeClass as V, renderList as X, normalizeStyle as G, unref as H, createCommentVNode as Y } from "vue";
+import { hostSlot as q } from "@intentic/extension-api";
+const { bindHost: J, host: x } = q("intentic.contact-sheet"), W = /* @__PURE__ */ new Set(["png", "jpg", "jpeg", "gif", "webp", "avif", "bmp"]), R = (e) => {
   const t = e.lastIndexOf(".");
   return t > 0 && W.has(e.slice(t + 1).toLowerCase());
 }, k = "", K = (e) => {
@@ -17,7 +11,7 @@ const J = (e) => {
     for (const r of n)
       if (r.ignored !== !0) {
         if (r.type === "file") {
-          if (z(r.name)) {
+          if (R(r.name)) {
             const i = K(r.path);
             t.set(i, (t.get(i) ?? 0) + 1);
           }
@@ -27,23 +21,23 @@ const J = (e) => {
       }
   };
   return o(e), t;
-}, Z = (e) => e.filter((t) => t.type === "file" && z(t.name)).map((t) => ({ name: t.name, path: t.path, size: t.size })).sort((t, o) => t.name.localeCompare(o.name, void 0, { numeric: !0, sensitivity: "base" })), ee = (e, t) => e, M = R(/* @__PURE__ */ new Map()), j = R([]), te = (e) => M.value.get(e), oe = () => j.value, ne = 6e4;
-let L = 0, w;
+}, Z = (e) => e.filter((t) => t.type === "file" && R(t.name)).map((t) => ({ name: t.name, path: t.path, size: t.size })).sort((t, o) => t.name.localeCompare(o.name, void 0, { numeric: !0, sensitivity: "base" })), ee = (e, t) => e, z = N(/* @__PURE__ */ new Map()), M = N([]), te = (e) => z.value.get(e), oe = () => M.value, ne = 6e4;
+let A = 0, w;
 const re = async () => {
   const t = (await x().sandbox.json("/workspace/tree")).tree ?? [];
-  j.value = t, M.value = Q(t);
-}, $ = async (e, t = !1) => {
-  if (!(!t && e - L < ne)) {
+  M.value = t, z.value = Q(t);
+}, L = async (e, t = !1) => {
+  if (!(!t && e - A < ne)) {
     if (w !== void 0)
       return w;
-    L = e, w = re().catch(() => {
+    A = e, w = re().catch(() => {
     }), await w, w = void 0;
   }
 }, se = () => {
   const e = x();
-  $(Date.now(), !0);
+  L(Date.now(), !0);
   const t = e.workspace.onDidChange(() => {
-    e.sandbox.reachable() && $(Date.now());
+    e.sandbox.reachable() && L(Date.now());
   });
   return { dispose: () => t.dispose() };
 }, ae = `
@@ -73,7 +67,7 @@ const re = async () => {
 `, ie = () => {
   const e = document.createElement("style");
   return e.dataset.owner = "intentic.contact-sheet", e.textContent = ae, document.head.append(e), { dispose: () => e.remove() };
-}, $e = (e, t) => {
+}, Ne = (e, t) => {
   J(e), t.subscriptions.push(
     ie(),
     se(),
@@ -84,17 +78,17 @@ const re = async () => {
         if (!(n === void 0 || n === 0))
           return {
             icon: "image",
-            tooltip: `Open the contact sheet — ${n} picture${n === 1 ? "" : "s"}`,
+            tooltip: `Open the contact sheet, ${n} picture${n === 1 ? "" : "s"}`,
             title: "Photos"
           };
       },
-      view: async () => (await Promise.resolve().then(() => Se)).default
+      view: async () => (await Promise.resolve().then(() => Ae)).default
     }),
-    // The workspace root has no row in the tree — it is the thing the tree renders the contents of — so a
+    // The workspace root has no row in the tree (it is the thing the tree renders the contents of) so a
     // sheet of the pictures sitting loose at the top of the workspace is only reachable from the palette.
     e.commands.register("contact-sheet.root", () => e.documents.open?.("photos", k))
   );
-}, ce = 274, B = 34665, le = 36867, de = (e) => {
+}, ce = 274, j = 34665, le = 36867, de = (e) => {
   if (e.length < 4 || e[0] !== 255 || e[1] !== 216)
     return {};
   const t = new DataView(e.buffer, e.byteOffset, e.byteLength);
@@ -108,12 +102,12 @@ const re = async () => {
     const r = t.getUint16(o + 2);
     if (r < 2)
       return {};
-    if (n === 225 && o + 4 + 6 <= t.byteLength && D(e, o + 4, 4) === "Exif")
+    if (n === 225 && o + 4 + 6 <= t.byteLength && B(e, o + 4, 4) === "Exif")
       return ue(t, o + 10, e);
     o += 2 + r;
   }
   return {};
-}, D = (e, t, o) => String.fromCharCode(...e.subarray(t, t + o)), ue = (e, t, o) => {
+}, B = (e, t, o) => String.fromCharCode(...e.subarray(t, t + o)), ue = (e, t, o) => {
   if (t + 8 > e.byteLength)
     return {};
   const n = e.getUint16(t);
@@ -122,12 +116,12 @@ const re = async () => {
   const r = n === 18761;
   if (e.getUint16(t + 2, r) !== 42)
     return {};
-  const i = e.getUint32(t + 4, r), m = N(e, t, t + i, r, o), h = m.pointers.get(B), b = h === void 0 ? void 0 : N(e, t, t + h, r, o), u = m.orientation, p = b?.dateTimeOriginal ?? m.dateTimeOriginal;
+  const i = e.getUint32(t + 4, r), m = $(e, t, t + i, r, o), h = m.pointers.get(j), b = h === void 0 ? void 0 : $(e, t, t + h, r, o), u = m.orientation, p = b?.dateTimeOriginal ?? m.dateTimeOriginal;
   return {
     orientation: u !== void 0 && u >= 1 && u <= 8 ? u : void 0,
     takenAt: p === void 0 ? void 0 : pe(p)
   };
-}, N = (e, t, o, n, r) => {
+}, $ = (e, t, o, n, r) => {
   const i = /* @__PURE__ */ new Map();
   let m, h;
   if (o + 2 > e.byteLength)
@@ -140,11 +134,11 @@ const re = async () => {
     const v = e.getUint16(p, n), y = p + 8;
     if (v === ce)
       m = e.getUint16(y, n);
-    else if (v === B)
+    else if (v === j)
       i.set(v, e.getUint32(y, n));
     else if (v === le) {
-      const T = e.getUint32(p + 4, n), C = t + e.getUint32(y, n);
-      T >= 19 && C + 19 <= e.byteLength && (h = D(r, C, 19));
+      const U = e.getUint32(p + 4, n), C = t + e.getUint32(y, n);
+      U >= 19 && C + 19 <= e.byteLength && (h = B(r, C, 19));
     }
   }
   return { pointers: i, orientation: m, dateTimeOriginal: h };
@@ -176,16 +170,16 @@ const re = async () => {
 }, xe = { class: "cs-muted" }, be = ["onClick"], ye = { class: "cs-frame" }, we = ["src", "alt"], ke = {
   key: 1,
   class: "cs-meta"
-}, Ce = { class: "cs-caption" }, Ee = ["title"], Ie = { class: "cs-meta" }, Te = {
+}, Ce = { class: "cs-caption" }, Ie = ["title"], Te = { class: "cs-meta" }, Ue = {
   key: 2,
   class: "cs-note"
-}, Ue = 4, Oe = 128 * 1024, Ae = /* @__PURE__ */ P({
+}, Ee = 4, Oe = 128 * 1024, Se = /* @__PURE__ */ D({
   __name: "ContactSheet",
   props: {
     path: {}
   },
   setup(e) {
-    const t = e, o = E([]), n = E(0), r = E(!0), i = E(void 0), m = x().settings, h = O(() => String(m.get("thumbnail") ?? "medium")), b = O(() => Math.max(1, Number(m.get("limit") ?? 120))), u = O(() => t.path === k ? "Workspace root" : t.path.slice(t.path.lastIndexOf("/") + 1)), p = () => {
+    const t = e, o = I([]), n = I(0), r = I(!0), i = I(void 0), m = x().settings, h = O(() => String(m.get("thumbnail") ?? "medium")), b = O(() => Math.max(1, Number(m.get("limit") ?? 120))), u = O(() => t.path === k ? "Workspace root" : t.path.slice(t.path.lastIndexOf("/") + 1)), p = () => {
       for (const s of o.value)
         s.url !== void 0 && URL.revokeObjectURL(s.url);
     }, v = async (s) => {
@@ -201,10 +195,10 @@ const re = async () => {
       try {
         const c = s === k ? ee(oe(), k) : (await x().sandbox.json(`/workspace/children?path=${encodeURIComponent(s)}`)).entries ?? [], a = Z(c);
         n.value = a.length, o.value = a.slice(0, b.value).map((_) => ({ picture: _ }));
-        const U = [...o.value];
+        const E = [...o.value];
         await Promise.all(
-          Array.from({ length: Ue }, async () => {
-            for (let _ = U.shift(); _ !== void 0; _ = U.shift())
+          Array.from({ length: Ee }, async () => {
+            for (let _ = E.shift(); _ !== void 0; _ = E.shift())
               await v(_).catch(() => {
                 _.error = "couldn't read";
               }), o.value = [...o.value];
@@ -216,20 +210,20 @@ const re = async () => {
         r.value = !1;
       }
     };
-    F(() => t.path, (s) => {
+    P(() => t.path, (s) => {
       y(s);
-    }, { immediate: !0 }), V(p);
-    const T = (s) => x().navigate(`/workspace/${s.path}`), C = (s) => s === void 0 ? void 0 : s >= 1024 * 1024 ? `${(s / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(s / 1024))} kB`;
+    }, { immediate: !0 }), F(p);
+    const U = (s) => x().navigate(`/workspace/${s.path}`), C = (s) => s === void 0 ? void 0 : s >= 1024 * 1024 ? `${(s / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(s / 1024))} kB`;
     return (s, c) => (l(), d("div", fe, [
       g("div", ge, [
         g("span", he, f(u.value), 1),
         g("span", ve, [
-          r.value ? (l(), d(I, { key: 0 }, [
-            A("Loading…")
-          ], 64)) : n.value > o.value.length ? (l(), d(I, { key: 1 }, [
-            A(f(o.value.length) + " of " + f(n.value) + ' pictures — raise "Pictures per folder" in Settings → Extensions', 1)
-          ], 64)) : (l(), d(I, { key: 2 }, [
-            A(f(n.value) + " picture" + f(n.value === 1 ? "" : "s"), 1)
+          r.value ? (l(), d(T, { key: 0 }, [
+            S("Loading…")
+          ], 64)) : n.value > o.value.length ? (l(), d(T, { key: 1 }, [
+            S(f(o.value.length) + " of " + f(n.value) + ' pictures: raise "Pictures per folder" in Settings → Extensions', 1)
+          ], 64)) : (l(), d(T, { key: 2 }, [
+            S(f(n.value) + " picture" + f(n.value === 1 ? "" : "s"), 1)
           ], 64))
         ])
       ]),
@@ -237,13 +231,13 @@ const re = async () => {
         g("p", xe, "Couldn't list this folder: " + f(i.value), 1)
       ])) : (l(), d("div", {
         key: 1,
-        class: X(`cs-grid cs-grid-${h.value}`)
+        class: V(`cs-grid cs-grid-${h.value}`)
       }, [
-        (l(!0), d(I, null, G(o.value, (a) => (l(), d("button", {
+        (l(!0), d(T, null, X(o.value, (a) => (l(), d("button", {
           key: a.picture.path,
           class: "cs-tile",
           type: "button",
-          onClick: (U) => T(a.picture)
+          onClick: (E) => U(a.picture)
         }, [
           g("div", ye, [
             a.url ? (l(), d("img", {
@@ -251,25 +245,25 @@ const re = async () => {
               src: a.url,
               alt: a.picture.name,
               loading: "lazy",
-              style: H({ transform: Y(me)(a.meta?.orientation) })
+              style: G({ transform: H(me)(a.meta?.orientation) })
             }, null, 12, we)) : (l(), d("span", ke, f(a.error ?? "…"), 1))
           ]),
           g("div", Ce, [
             g("div", {
               class: "cs-name",
               title: a.picture.name
-            }, f(a.picture.name), 9, Ee),
-            g("div", Ie, f([a.meta?.takenAt, C(a.picture.size)].filter(Boolean).join(" · ")), 1)
+            }, f(a.picture.name), 9, Ie),
+            g("div", Te, f([a.meta?.takenAt, C(a.picture.size)].filter(Boolean).join(" · ")), 1)
           ])
         ], 8, be))), 128))
       ], 2)),
-      !r.value && n.value === 0 && !i.value ? (l(), d("p", Te, " No pictures directly in this folder. HEIC files aren't shown — no browser decodes them; convert them first. ")) : q("", !0)
+      !r.value && n.value === 0 && !i.value ? (l(), d("p", Ue, " No pictures directly in this folder. HEIC files aren't shown: no browser decodes them; convert them first. ")) : Y("", !0)
     ]));
   }
-}), Se = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}), Ae = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: Ae
+  default: Se
 }, Symbol.toStringTag, { value: "Module" }));
 export {
-  $e as activate
+  Ne as activate
 };
