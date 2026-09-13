@@ -9,7 +9,8 @@
     "scripts": {
         "build": "vite build",
         "typecheck": "vue-tsc --noEmit -p tsconfig.json",
-        "test": "node --test test/pictures.test.ts test/activate.test.mjs"
+        "test": "pnpm run build && node --test test/pictures.test.ts test/activate.test.mjs",
+        "verify": "pnpm run typecheck && pnpm run test"
     },
     "dependencies": {
         "@intentic/extension-api": "^1.228.3"
