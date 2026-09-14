@@ -3,14 +3,7 @@ import { shallowRef } from "vue";
 import { host } from "./host";
 import { indexPictureFolders, type TreeEntry } from "./pictures";
 
-/* WHICH FOLDERS HAVE PICTURES IN THEM: module state, owned by activate(), because the Workspace tree asks
- * `detect(path)` for every visible row on every render and that has to be a LOOKUP.
- *
- * A provider that fetched per row would issue a request per directory per repaint. So the tree is read ONCE
- * into a path → count map, and `detect` reads the map. Because the map lives in a ref, the tree repaints by
- * itself the moment the index lands: the same contract (and the same reason) as a view's badge.
- *
- * It also has to outlive any component: rows carry their icon while nothing of this extension is mounted. */
+/* WHICH FOLDERS HAVE PICTURES IN THEM: module state, owned by activate(). */
 
 const folders = shallowRef<ReadonlyMap<string, number>>(new Map());
 const tree = shallowRef<readonly TreeEntry[]>([]);
@@ -22,10 +15,7 @@ export const pictureCount = (path: string): number | undefined => folders.value.
 // The last tree read, for the one directory /workspace/children cannot serve: the root, whose path is empty.
 export const cachedTree = (): readonly TreeEntry[] => tree.value;
 
-/* Re-reading is throttled because the trigger is not a file event. The daemon's watcher pushes changed PATHS,
- * and no `contributes.files` prefix could carry "a picture appeared somewhere in the workspace"; what is
- * available is the facts poll behind workspace.onDidChange, which fires far more often than photo folders
- * appear. A whole-tree read on every one of those would be a request storm for an icon. */
+/* Re-reading is throttled because the trigger is not a file event. */
 const MIN_INTERVAL_MS = 60_000;
 let lastRead = 0;
 let inFlight: Promise<void> | undefined;

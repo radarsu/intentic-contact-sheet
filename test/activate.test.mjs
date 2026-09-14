@@ -2,10 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
-/* The built bundle against a host stub that enforces the manifest: the document provider's id, the command's
- * name, and (the one that matters most here) every daemon route the extension reaches. This extension DOES
- * call the daemon, so the route check is not ceremony: the manifest's `permissions.sandbox` list is what the
- * owner approved at install, and the real host throws on anything outside it. */
+/* The built bundle against a host stub that enforces the manifest: the document provider's id, the command's name. */
 
 const manifest = JSON.parse(await readFile(new URL(`../intentic-extension.json`, import.meta.url), `utf8`));
 

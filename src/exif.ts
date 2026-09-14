@@ -1,11 +1,4 @@
-/* The two EXIF fields a contact sheet cannot do without: which way up the picture goes, and when it was taken.
- *
- * Orientation is not a nicety. A phone writes its sensor's native landscape frame and a rotation flag beside
- * it; an <img> renders the frame. Without reading the flag, every portrait photo in the sheet lies on its side,
- * which is exactly the folder people open a contact sheet for. And a file's own timestamp is the date it was
- * copied, so the taken-date has to come from the picture or not at all.
- *
- * Only JPEG, which is where these live in practice. Everything else yields nothing and renders unrotated. */
+/* The two EXIF fields a contact sheet cannot do without: which way up the picture goes, and when it was taken. */
 
 export interface JpegMeta {
     // EXIF orientation 1–8; absent when the file doesn't say.
@@ -123,8 +116,7 @@ const formatExifDate = (raw: string): string | undefined => {
     return match === null ? undefined : `${match[1]}-${match[2]}-${match[3]} ${match[4]}:${match[5]}`;
 };
 
-/* Orientation as a CSS transform. The eight EXIF values are the four rotations and their mirrors; the mirrored
- * ones are rare (a front camera that flips its own frame) but cost one term each to honour. */
+/* EXIF orientation maps to one CSS transform. */
 export const orientationTransform = (orientation: number | undefined): string | undefined => {
     switch (orientation) {
         case 2:

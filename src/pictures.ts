@@ -1,5 +1,4 @@
-/* Which files are pictures, and which folders hold enough of them to be worth an icon in the tree. Pure, and
- * separate from the index that holds the answer, because this is the part with a rule in it. */
+/* Which files are pictures, and which folders hold enough of them to be worth an icon in the tree. */
 
 export interface TreeEntry {
     readonly name: string;
@@ -10,9 +9,7 @@ export interface TreeEntry {
     readonly children?: readonly TreeEntry[] | undefined;
 }
 
-/* Only formats a browser can actually decode. HEIC is the obvious omission and it is deliberate: Safari aside,
- * no browser decodes it, so counting a folder of iPhone originals as a photo folder would put an icon on a row
- * that opens a sheet of broken tiles. A pack like `intentic.paperwork` can convert them first. */
+/* Only formats a browser can actually decode. */
 export const PICTURE_EXTENSIONS = new Set([`png`, `jpg`, `jpeg`, `gif`, `webp`, `avif`, `bmp`]);
 
 export const isPicture = (name: string): boolean => {
@@ -29,12 +26,7 @@ const parentOf = (path: string): string => {
     return slash < 0 ? ROOT : path.slice(0, slash);
 };
 
-/* Directory path → how many pictures sit DIRECTLY in it. Not recursive on purpose: a contact sheet is of one
- * folder, so a parent that merely contains a photo folder should not offer one: otherwise every repository
- * root, and the workspace root above them, would claim to be a photo folder because something deep inside is.
- *
- * Ignored subtrees (node_modules, .git, browser profiles) are skipped whole: the icons they would add are
- * noise, and a `.git` full of nothing a person put there is not a folder anyone wants a sheet of. */
+/* Directory path → how many pictures sit DIRECTLY in it. */
 export const indexPictureFolders = (tree: readonly TreeEntry[]): Map<string, number> => {
     const counts = new Map<string, number>();
     const walk = (entries: readonly TreeEntry[]): void => {

@@ -5,11 +5,7 @@ import { host } from "./host";
 import { cachedTree } from "./index-state";
 import { entriesAt, picturesIn, ROOT, type Picture, type TreeEntry } from "./pictures";
 
-/* One folder's pictures, in the editor area beside the files. The host owns the tab; this owns what is in it.
- *
- * Every thumbnail is a separate authenticated read of the file's bytes: there is no thumbnail service in the
- * daemon and this extension is not allowed to write one, so the honest design is: fetch a bounded number,
- * concurrently but not all at once, and say plainly when there are more. */
+/* One folder's pictures, in the editor area beside the files. */
 
 const props = defineProps<{ path: string }>();
 
