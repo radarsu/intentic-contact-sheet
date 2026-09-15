@@ -38,7 +38,8 @@ to add one. So a sheet loads a bounded number of pictures (**Settings → Extens
 
 ## Install
 
-**Capabilities → Add → Extension**, then the repo URL and a full 40-character commit sha.
+**Capabilities → Add → Extension**, then the repo URL and whichever branch or release you want; the form pins
+it to the commit that name points at.
 
 ## Build it yourself
 
